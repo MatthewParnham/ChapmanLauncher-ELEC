@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Click on the download link to download the file:<p>
+
+<a href="TestFile.zip" download="Download">Download</a>
+<div id="games-list">
+
+</div>
+<a href="index.html">home</a>
+    <script>
+      const axios = require('axios');
+      let data = {};
+
+      axios.get("http://127.0.0.1:8000/games/v1/")
+      .then(function(res){
+          data = res.data
+          for (const {id, name} of data){
+            document.getElementById("games-list").innerHTML += `
+                <div id="${name}-game" onclick="">${name}</div>
+            `
+            document.getElementById(`${name}-game`).addEventListener("click", function(e){
+                axios.get(`http://127.0.0.1:8000/games/v1/${id}/`, {responseType: 'blob'})
+                .then(res =>{
+                    const downloadUrl = window.URL.createObjectURL(new Blob([res.data], {type: "application/zip"}));
+                    const link = document.createElement('a');
+                    link.href = downloadUrl;
+                    link.setAttribute('download', `${name}.zip`); //any other extension
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                })
+                .catch(err =>{
+                    console.log(err)
+                })
+            })
+          }
+      })
+      .catch(function(error){
+          console.log(error)
+      })
+    </script>
+
+</body>
+</html>

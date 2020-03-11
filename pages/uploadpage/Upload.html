@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>UPLOAD YOUR GAME</title>
+  </head>
+  <body>
+    <h1>Instructions</h1>
+    <p>Please make sure to only upload zipped files, otherwise your file willbe rejected.</p>
+
+    <form id="game-submit-form">
+      <label for="fname">Game Name:</label>
+      <input type="text" id="gameName" name="gameName"><br><br>
+      <label for="lname">Your Name:</label>
+      <input type="text" id="ownerName" name="ownerName"><br><br>
+      <label for="lname">Your Id:</label>
+      <input type="text" id="student-ids" name="ownerName"><br><br>
+      <p><input type="file" id="build" accept="zip,application/x-zip,application/x-zip-compressed"></p>
+      <input type="submit" value="Submit">
+    </form>
+
+    <!--pathing for database storage goes here or something-->
+    <!--<script src="upload.js"></script>-->
+    <script>
+      const axios = require('axios');
+      
+      document.getElementById("game-submit-form").addEventListener("submit", e => {
+          
+          e.preventDefault();
+          const formData = new FormData();
+          formData.append("name", document.getElementById("gameName").value);
+          formData.append("studentNames", document.getElementById("ownerName").value);
+          formData.append("studentIds", document.getElementById("student-ids").value);
+          formData.append("build", document.getElementById("build").files[0]);
+          axios.post('http://127.0.0.1:8000/games/v1/', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            },
+          })
+          .then(function (response) {
+            console.log(response);
+            window.location.href = "../homepage/Download.html"
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      })
+    </script>
+    
+
+  </body>
+</html>
