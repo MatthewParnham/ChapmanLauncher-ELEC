@@ -28,10 +28,12 @@
           
           e.preventDefault();
           const formData = new FormData();
-          formData.append("name", document.getElementById("gameName").value);
+          formData.append("title", document.getElementById("gameName").value);
           formData.append("studentNames", document.getElementById("ownerName").value);
           formData.append("studentIds", document.getElementById("student-ids").value);
           formData.append("build", document.getElementById("build").files[0]);
+          formData.append("description", "this is a game");
+          formData.append("genres", "genres");
           axios.post('http://127.0.0.1:8000/games/v1/', formData, {
             headers: {
               'Content-Type': 'multipart/form-data'

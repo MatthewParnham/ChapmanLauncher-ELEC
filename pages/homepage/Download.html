@@ -12,29 +12,35 @@
     <script>
       const axios = require('axios');
       let data = {};
-
+      console.log("adlfkjalk;dfjkl;")
       axios.get("http://127.0.0.1:8000/games/v1/")
       .then(function(res){
           data = res.data
-          for (const {id, name} of data){
+          console.log(res.data)
+          for (const {id, title} of data){
             document.getElementById("games-list").innerHTML += `
-                <div id="${name}-game" onclick="">${name}</div>
+                <div id="${title}-game">${title}</div>
             `
-            document.getElementById(`${name}-game`).addEventListener("click", function(e){
+            
+
+            setTimeout(function () {document.getElementById(`${title}-game`).addEventListener("click", function(e){
+                alert("asdf;ljhas;lfjl")
                 axios.get(`http://127.0.0.1:8000/games/v1/${id}/`, {responseType: 'blob'})
                 .then(res =>{
                     const downloadUrl = window.URL.createObjectURL(new Blob([res.data], {type: "application/zip"}));
                     const link = document.createElement('a');
                     link.href = downloadUrl;
-                    link.setAttribute('download', `${name}.zip`); //any other extension
+                    link.setAttribute('download', `${title}.zip`); //any other extension
                     document.body.appendChild(link);
                     link.click();
                     link.remove();
                 })
                 .catch(err =>{
                     console.log(err)
-                })
+                })}, 400)
             })
+
+            console.log(document.getElementById(`${title}-game`))
           }
       })
       .catch(function(error){
