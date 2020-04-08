@@ -1,0 +1,22 @@
+.upload-form-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+}
+
+.game-submit-form {
+    align-items: center;
+    /* background-color: #cecccc; */
+    display: flex;
+    flex-direction: column;
+    height: 450px;
+}
+
+.game-submit-form span {
+    margin: 10px;
+}
+
+.game-submit-form input[type="file"] {
+    width: 150px;
+}

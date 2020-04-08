@@ -1,0 +1,31 @@
+.game-row {
+    display: flex;
+}
+
+.game-row > div {
+    align-items: center;
+    border: 1px solid black;
+    border-collapse: collapse;
+    display: flex;
+    height: 50px;
+    justify-content: center;
+}
+
+.game-row .title {
+    width: 25%;
+}
+
+.game-row .description {
+    padding-left: 5px;
+    width: 40%;
+}
+
+.game-row .genres {
+    width: 20%;
+}
+
+.game-row .download {
+    cursor: pointer;
+    width: 15%;
+}
+

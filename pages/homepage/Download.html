@@ -1,46 +1,76 @@
 <!DOCTYPE html>
-<html>
+<head>
+    <title>Download Chapman Games</title>
+    <link rel="stylesheet" href="./download.css">
+    <link rel="stylesheet" href="../header.css">
+    <link rel="stylesheet" href="../downloadupload.css">
+</head>
 <body>
-
-<p>Click on the download link to download the file:<p>
-
-<a href="TestFile.zip" download="Download">Download</a>
-<div id="games-list">
-
-</div>
-<a href="index.html">home</a>
+    <div class="download-upload-page-container">
+        <div class="heading">
+            <img src="../logo.png">
+        </div>
+        <div class="page-options">
+            <ul>
+                <li><a href="#">Download</a></li>
+                <li><a href="../uploadpage/Upload.html">Upload</a></li>
+            </ul>
+        </div>
+        <div id="games-table">
+            <div class="game-row">
+                <div class="title">Title</div>
+                <div class="description">Description</div>
+                <div class="genres">Genres/Tags</div>
+                <div class="download">Download</div>
+            </div>
+        <div>
+    </div>
     <script>
+        // title = models.CharField(max_length=50, unique=True)
+        // studentNames = models.CharField(max_length=80)
+        // genres = models.CharField(max_length=128)
+        // studentIds = models.CharField(max_length=60)
+        // description = models.CharField(max_length=128)
+        // build = models.FileField(upload_to="games/")
+      function gameRowComponent({title, description, genres}) {
+        return `
+            <div id="game-row-${title}" class="game-row">
+                <div class="title">${title}</div>
+                <div class="description">${description}</div>
+                <div class="genres">${genres}</div>
+                <div class="download" id="download-${title}">Download</div>
+            </div>
+        `
+      }
       const axios = require('axios');
+      const download = require('download-file');
       let data = {};
-      console.log("adlfkjalk;dfjkl;")
       axios.get("http://127.0.0.1:8000/games/v1/")
       .then(function(res){
           data = res.data
           console.log(res.data)
-          for (const {id, title} of data){
-            document.getElementById("games-list").innerHTML += `
-                <div id="${title}-game">${title}</div>
-            `
-            
-
-            setTimeout(function () {document.getElementById(`${title}-game`).addEventListener("click", function(e){
-                alert("asdf;ljhas;lfjl")
+          for (const gameInfo of data){
+            const {title, id} = gameInfo;
+            document.getElementById("games-table").innerHTML += gameRowComponent(gameInfo)
+            setTimeout(function () {document.getElementById(`download-${title}`).addEventListener("click", function(e){
                 axios.get(`http://127.0.0.1:8000/games/v1/${id}/`, {responseType: 'blob'})
                 .then(res =>{
-                    const downloadUrl = window.URL.createObjectURL(new Blob([res.data], {type: "application/zip"}));
-                    const link = document.createElement('a');
-                    link.href = downloadUrl;
-                    link.setAttribute('download', `${title}.zip`); //any other extension
-                    document.body.appendChild(link);
-                    link.click();
-                    link.remove();
+                    const downloadUrl = 'http://i.imgur.com/G9bDaPH.jpg'
+                    const downloadOptions = {
+                        directory: `/Users/superchoby/Applications`,
+                        filename: `${title}.zip`
+                    }
+                    download(downloadUrl, downloadOptions, function(err){
+                        console.log(downloadOptions)
+                        if (err) throw err
+                        console.log("meow")
+                    }) 
                 })
                 .catch(err =>{
                     console.log(err)
                 })}, 400)
             })
 
-            console.log(document.getElementById(`${title}-game`))
           }
       })
       .catch(function(error){
