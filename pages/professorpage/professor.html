@@ -4,11 +4,21 @@
     <meta charset="utf-8">
     <title>Approve Games</title>
     <link rel="stylesheet" href="./professor.css">
+    <link rel='stylesheet' href="../header.css">
   </head>
   <body>
+    <div style='margin-bottom: 15px;'>
+        <a href='../homepage/index.html'><img src="../logo.png"></a>
+    </div>
     <a href="../homepage/Download.html">Download</a>
     <div id='games-to-approve'>
-        
+        <div class="game-row">
+            <div class="title">Title</div>
+            <div class="description">Description</div>
+            <div class="genres">Genres/Tags</div>
+            <div class="download">Approve</div>
+            <div class="download">Deny</div>
+        </div>
     </div>
     <!--pathing for database storage goes here or something-->
     <!--<script src="upload.js"></script>-->
@@ -28,7 +38,15 @@
 
       const approveDenyHandler = (gamesComponents, id, title) => {
           
-            document.getElementById("games-to-approve").innerHTML = '';
+            document.getElementById("games-to-approve").innerHTML = `
+                <div class="game-row">
+                    <div class="title">Title</div>
+                    <div class="description">Description</div>
+                    <div class="genres">Genres/Tags</div>
+                    <div class="download">Approve</div>
+                    <div class="download">Deny</div>
+                </div>
+            `;
             const newGamesList = [];
             for (let i = 0; i < gamesComponents.length; ++i) {
                 const {id: gameId, component, title} = gamesComponents[i];
