@@ -59,30 +59,42 @@
 
       document.getElementById("game-submit-form").addEventListener("submit", e => {
 
-          // const options = {
-          //   type: 'question',
-          //   buttons: ['Cancel', 'Yes, please', 'No, thanks'],
-          //   defaultId: 2,
-          //   title: 'Question',
-          //   message: 'Do you want to do this?',
-          //   detail: 'It does not really matter',
-          //   checkboxLabel: 'Remember my answer',
-          //   checkboxChecked: true,
-          // };
-          // const { dialog } = require('electron')
-          // console.log(dialog)
-          // const response = dialog.showMessageBox(null);
-          // alert("This is alert box!");
+           const options = {
+             type: 'question',
+             buttons: ['Cancel', 'Yes, please', 'No, thanks'],
+             defaultId: 2,
+             title: 'Question',
+             message: 'Do you want to do this?',
+             detail: 'It does not really matter',
+             checkboxLabel: 'Remember my answer',
+             checkboxChecked: true,
+           };
+           //const { dialog } = require('electron')
+           //console.log(dialog)
+           //const response = dialog.showMessageBox(null);
+           // alert("This is alert box!");
 
           e.preventDefault();
           const formData = new FormData();
           // function splitList(values) {
           //   str.split(", ")
           // }
-          formData.append("title", document.getElementById("gameName").value);
-          formData.append("developers", document.getElementById("developers").value);
-          // if (document.getElementById("student-ids").value.length == 7) {
+          if(document.getElementById("gameName").value.length < 1) {
+            alert("Game Name is blank.");
+          } else {
+            formData.append("title", document.getElementById("gameName").value);
+          }
+          if(document.getElementById("developers").value.length < 1) {
+            alert("Developer is blank.");
+          } else {
+            formData.append("developers", document.getElementById("developers").value);
+          }
+          if(document.getElementById("student-ids").value.length < 1) {
+            alert("Student ID is blank.");
+          } else {
             formData.append("studentIds", document.getElementById("student-ids").value);
+          }
+
           // } else {
             // const options = {
             //   type: 'question',
@@ -100,9 +112,22 @@
             // alert("This is alert box!");
             // break;
           // }
-          formData.append("build", document.getElementById("build").files[0]);
-          formData.append("description", document.getElementById("description").value);
-          formData.append("genres", document.getElementById("genre").value);
+          if(document.getElementById("build").files[0] == null) {
+            alert("No build selected.");
+          } else {
+            formData.append("build", document.getElementById("build").files[0]);
+          }
+          if(document.getElementById("description").value.length < 1) {
+            alert("No description.");
+          } else {
+            formData.append("description", document.getElementById("description").value);
+          }
+          if(document.getElementById("genre").value.length < 1) {
+            alert("No genres.");
+          }
+          else{
+            formData.append("genres", document.getElementById("genre").value);
+          }
           axios.post('http://127.0.0.1:8000/games/v1/', formData, {
             headers: {
               'Content-Type': 'multipart/form-data'
