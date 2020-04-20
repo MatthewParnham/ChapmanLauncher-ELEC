@@ -50,27 +50,28 @@
           data = res.data
           console.log(res.data)
           for (const gameInfo of data){
-            const {title, id} = gameInfo;
-            document.getElementById("games-table").innerHTML += gameRowComponent(gameInfo)
-            setTimeout(function () {document.getElementById(`download-${title}`).addEventListener("click", function(e){
-                axios.get(`http://127.0.0.1:8000/games/v1/${id}/`, {responseType: 'blob'})
-                .then(res =>{
-                    const downloadUrl = 'http://i.imgur.com/G9bDaPH.jpg'
-                    const downloadOptions = {
-                        directory: `/Users/superchoby/Applications`,
-                        filename: `${title}.zip`
-                    }
-                    download(downloadUrl, downloadOptions, function(err){
-                        console.log(downloadOptions)
-                        if (err) throw err
-                        console.log("meow")
-                    }) 
+            const {title, id, hasBeenApproved} = gameInfo;
+            if (hasBeenApproved) {
+                document.getElementById("games-table").innerHTML += gameRowComponent(gameInfo)
+                setTimeout(function () {document.getElementById(`download-${title}`).addEventListener("click", function(e){
+                    axios.get(`http://127.0.0.1:8000/games/v1/${id}/`, {responseType: 'blob'})
+                    .then(res =>{
+                        const downloadUrl = 'http://i.imgur.com/G9bDaPH.jpg'
+                        const downloadOptions = {
+                            directory: `/Users/superchoby/Applications`,
+                            filename: `${title}.zip`
+                        }
+                        download(downloadUrl, downloadOptions, function(err){
+                            console.log(downloadOptions)
+                            if (err) throw err
+                            console.log("meow")
+                        }) 
+                    })
+                    .catch(err =>{
+                        console.log(err)
+                    })}, 400)
                 })
-                .catch(err =>{
-                    console.log(err)
-                })}, 400)
-            })
-
+            }
           }
       })
       .catch(function(error){
