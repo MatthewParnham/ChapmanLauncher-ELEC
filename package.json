@@ -1,7 +1,7 @@
 {
   "name": "Chapman-Launcher",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "A minimal Chapman application",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -36,7 +36,7 @@
       "icon": "build/icon.ico"
     }
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/derekprate/UP_KartRacing.git",
   "keywords": [
     "Electron",
     "quick",
@@ -44,7 +44,7 @@
     "tutorial",
     "demo"
   ],
-  "author": "GitHub",
+  "author": "SE320 Spring 2020",
   "license": "CC0-1.0",
   "devDependencies": {
     "axios": "^0.19.2",
