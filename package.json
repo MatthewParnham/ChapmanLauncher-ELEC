@@ -47,7 +47,7 @@
   "author": "SE320 Spring 2020",
   "license": "CC0-1.0",
   "devDependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "download-file": "^0.1.5",
     "electron": "^8.0.1",
     "electron-builder": "^21.0.11",
